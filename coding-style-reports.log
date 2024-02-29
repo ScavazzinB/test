@@ -1,3 +1,0 @@
-./Makefile:50: illegal token in column 33, giving up (hint: fix the file or remove it from the working set)
-./fonction/split_line.c:41: MAJOR:C-L1
-./my_sh:1: MAJOR:C-O1
