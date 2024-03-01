@@ -20,7 +20,7 @@ int main(int argc, char **argv, char **envp)
         if (ligne == NULL) {
             break;
         }
-        arguments = split_line(ligne);
+        arguments = split_line(ligne, " \t\n\r\a");
         statut = execute(arguments, &env);
         free(ligne);
         free(arguments);
@@ -28,3 +28,4 @@ int main(int argc, char **argv, char **envp)
     free_env(env);
     return EXIT_SUCCESS;
 }
+//

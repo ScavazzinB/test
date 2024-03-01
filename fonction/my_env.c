@@ -16,3 +16,4 @@ void my_env(t_env *env)
         current = current->next;
     }
 }
+//

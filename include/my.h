@@ -36,7 +36,7 @@ int my_str_isalpha(const char *str);
 t_env *init_env(char **envp);
 void free_env(t_env *env);
 char *read_line(void);
-char **split_line(char *line);
+char **split_line(char *line, const char *delim);
 int execute(char **args, t_env **env);
 void my_cd(char **args, t_env *env);
 char *get_env_value(t_env *env, const char *key);
@@ -54,10 +54,17 @@ void *my_memcpy(void *dest, const void *src, size_t n);
 void handle_child_process(char **args, t_env *env);
 int handle_parent_process(pid_t pid);
 int execute_program(char **args, t_env **env);
-void execute_builtin(char **args, t_env **env);
+int execute_builtin(char **args, t_env **env);
 int is_builtin_command(char *command);
 char *get_command_path(char *command, t_env *env);
 char **convert_env_to_array(t_env *env);
 int get_env_size(t_env *env);
+void handle_format_specifier_printf(va_list *args, char specifier);
+int my_snprintf(char *str, size_t size, const char *format, ...);
+int my_sprintf(char *str, const char *format, ...);
+int handle_format_specifier_snprintf(va_list *args, char specifier, char *str,
+    int j, size_t size);
+int my_putstr_snprintf(char *str, char *dest, int j, size_t size);
+int my_put_nbr_snprintf(int nb, char *dest, int j, size_t size);
 
 #endif

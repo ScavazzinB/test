@@ -18,8 +18,9 @@ void my_printf(const char *format, ...)
         if (format[i] == '%') {
             i++;
             handle_format_specifier_printf(&args, format[i]);
-        }
+        } else {
             my_putchar(format[i]);
+        }
         i++;
     }
     va_end(args);
@@ -36,6 +37,7 @@ void handle_format_specifier_printf(va_list *args, char specifier)
             break;
         default:
             my_putchar('%');
+            my_putchar(specifier);
             break;
     }
 }

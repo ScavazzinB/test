@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2024
 ## B-PSU-200-NCE-2-1-minishell1-baptiste.scavazzin
 ## File description:
-## Makefile
+## Make
 ##
 
 NAME	= my_sh
@@ -16,6 +16,8 @@ SRCS	= fonction/str.c \
 		fonction/alpha.c \
 		fonction/fprintf.c \
 		fonction/printf.c \
+		fonction/sprintf.c \
+		fonction/snprintf.c \
 		fonction/my_cd.c \
 		fonction/my_env.c \
 		fonction/my_exit.c \

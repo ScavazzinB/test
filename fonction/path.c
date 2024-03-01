@@ -9,20 +9,45 @@
 
 char *get_command_path(char *command, t_env *env)
 {
-    char *path_env = get_env_value(env, "PATH");
-    char **paths = split_line(path_env);
-    char *command_path = malloc(1024);
+    char *path_value = get_env_value(env, "PATH");
+    if (path_value == NULL) {
+        my_printf("Debug: PATH variable is not set.\n");
+        return NULL;
+    }
+
+    char *path_copy = strdup(path_value);
+    if (path_copy == NULL) {
+        my_fprintf(stderr, "Failed to duplicate PATH value.\n");
+        return NULL;
+    }
+
+    char **paths = split_line(path_copy, ":");
+    char *command_path = NULL;
 
     for (int i = 0; paths[i] != NULL; i++) {
-        snprintf(command_path, 1024, "%s/%s", paths[i], command);
-        if (access(command_path, X_OK) == 0) {
+        char *full_path = malloc(strlen(paths[i]) + strlen(command) + 2);
+        if (full_path == NULL) {
+            my_fprintf(stderr, "Allocation error\n");
+            free(path_copy);
             free(paths);
-            return command_path;
+            return NULL;
         }
+        sprintf(full_path, "%s/%s", paths[i], command);
+        if (access(full_path, X_OK) == 0) {
+            command_path = strdup(full_path);
+            free(full_path);
+            break;
+        }
+        free(full_path);
     }
+    free(path_copy);
     free(paths);
-    free(command_path);
-    return NULL;
+
+    if (command_path == NULL) {
+        my_fprintf(stderr, "Command not found: %s\n", command);
+    }
+
+    return command_path;
 }
 
 char **convert_env_to_array(t_env *env)
@@ -34,7 +59,7 @@ char **convert_env_to_array(t_env *env)
 
     while (current != NULL) {
         env_array[i] = malloc(strlen(current->key) + strlen(current->value) + 2);
-        sprintf(env_array[i], "%s=%s", current->key, current->value);
+        my_sprintf(env_array[i], "%s=%s", current->key, current->value);
         current = current->next;
         i++;
     }
