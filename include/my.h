@@ -69,6 +69,7 @@ int my_putstr_snprintf(char *str, char *dest, int j, size_t size);
 int my_put_nbr_snprintf(int nb, char *dest, int j, size_t size);
 void handle_child_status(int status);
 void setup_child_signal_handler(void);
+int free_array(char **array);
 
 
 #endif

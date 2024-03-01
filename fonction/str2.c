@@ -35,4 +35,14 @@ int my_strcpy(char *dest, char *src)
     dest[i] = '\0';
     return (dest);
 }
-//
+
+int free_array(char **array)
+{
+    int i = 0;
+
+    while (array[i]) {
+        free(array[i]);
+        i++;
+    }
+    free(array);
+}

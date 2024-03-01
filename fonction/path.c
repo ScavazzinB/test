@@ -15,7 +15,7 @@ char *get_command_path(char *command, t_env *env)
         return NULL;
     }
 
-    char *path_copy = strdup(path_value);
+    char *path_copy = my_strdup(path_value);
     if (path_copy == NULL) {
         my_fprintf(stderr, "Failed to duplicate PATH value.\n");
         return NULL;
@@ -34,7 +34,7 @@ char *get_command_path(char *command, t_env *env)
         }
         sprintf(full_path, "%s/%s", paths[i], command);
         if (access(full_path, X_OK) == 0) {
-            command_path = strdup(full_path);
+            command_path = my_strdup(full_path);
             free(full_path);
             break;
         }

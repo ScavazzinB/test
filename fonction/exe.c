@@ -67,25 +67,28 @@ int execute_program(char **args, t_env **env)
     } else {
         pid = fork();
         if (pid == 0) {
-            char *path_value = get_env_value(*env, "PATH");
-            if (path_value == NULL) {
-            } else {
-            }
-
+            // Child process
             command_path = get_command_path(args[0], *env);
             if (command_path != NULL) {
                 execve(command_path, args, convert_env_to_array(*env));
                 free(command_path);
             }
-            my_fprintf(stderr, "%s: Command not found\n", args[0]);
-            _exit(EXIT_FAILURE);
+            // If execve fails or if the command is not found, print an error and return.
+            fprintf(stderr, "%s: Command not found\n", args[0]);
+            return 1; // Return an error code
         } else if (pid < 0) {
+            // Fork failed
             perror("fork");
             return EXIT_FAILURE;
         } else {
-            waitpid(pid, &status, 0);
+            // Parent process
+            do {
+                waitpid(pid, &status, WUNTRACED);
+            } while (!WIFEXITED(status) && !WIFSIGNALED(status));
             if (WIFEXITED(status)) {
                 return WEXITSTATUS(status);
+            } else if (WIFSIGNALED(status)) {
+                return WTERMSIG(status) + 128;
             }
         }
     }
