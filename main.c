@@ -14,6 +14,8 @@ int main(int argc, char **argv, char **envp)
     int statut = 0;
     t_env *env = init_env(envp);
 
+    setup_child_signal_handler();
+
     while (statut == 0) {
         my_printf("$> ");
         ligne = read_line();
@@ -28,4 +30,3 @@ int main(int argc, char **argv, char **envp)
     free_env(env);
     return EXIT_SUCCESS;
 }
-//

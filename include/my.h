@@ -15,6 +15,7 @@
     #include <stddef.h>
     #include <sys/types.h>
     #include <sys/wait.h>
+    #include <signal.h>
 
 typedef struct env {
     char *key;
@@ -66,5 +67,8 @@ int handle_format_specifier_snprintf(va_list *args, char specifier, char *str,
     int j, size_t size);
 int my_putstr_snprintf(char *str, char *dest, int j, size_t size);
 int my_put_nbr_snprintf(int nb, char *dest, int j, size_t size);
+void handle_child_status(int status);
+void setup_child_signal_handler(void);
+
 
 #endif

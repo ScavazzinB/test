@@ -10,6 +10,7 @@ NAME	= my_sh
 SRCS	= fonction/str.c \
 		fonction/path.c \
 		fonction/str2.c \
+		fonction/seg.c \
 		fonction/split_line.c \
 		fonction/my_realloc.c \
 		fonction/my_atoi.c \
